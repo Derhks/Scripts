@@ -3,6 +3,18 @@ import tkinter as tk
 from utils import filtering_images, move_folder_image, validate_folder_exist
 
 
+def clear() -> None:
+    """
+    Limpia todas las entradas de la ventana
+    """
+    min_width.delete(0, tk.END)
+    min_height.delete(0, tk.END)
+    actual_directory.delete(0, tk.END)
+    new_directory.delete(0, tk.END)
+
+    ...
+
+
 def main() -> None:
     actual_dir = actual_directory.get()
     new_dir = new_directory.get()
@@ -26,6 +38,7 @@ def main() -> None:
     move_folder_image(image_list, actual_dir, new_dir, label_result)
 
     label_result["text"] = "Se movieron todas las imágenes."
+
     ...
 
 
@@ -34,22 +47,26 @@ window.title("Filtrar Imágenes")
 window.resizable(width=False, height=False)
 
 width_entry = tk.Frame(master=window)
-min_width = tk.Entry(master=width_entry, width=20)
+min_width = tk.Entry(master=width_entry, width=20, borderwidth=5)
 label_min_width = tk.Label(master=window, text="Anchura de la imagen")
 
 height_entry = tk.Frame(master=window)
-min_height = tk.Entry(master=height_entry, width=20)
+min_height = tk.Entry(master=height_entry, width=20, borderwidth=5)
 label_min_height = tk.Label(master=window, text="Altura de la imagen")
 
 actual_directory_entry = tk.Frame(master=window)
-actual_directory = tk.Entry(master=actual_directory_entry, width=20)
+actual_directory = tk.Entry(
+    master=actual_directory_entry,
+    width=20,
+    borderwidth=5
+)
 label_actual_directory = tk.Label(
     master=window,
     text="Ruta de la carpeta actual de las imágenes"
 )
 
 new_directory_entry = tk.Frame(master=window)
-new_directory = tk.Entry(master=new_directory_entry, width=20)
+new_directory = tk.Entry(master=new_directory_entry, width=20, borderwidth=5)
 label_new_directory = tk.Label(
     master=window,
     text="Ruta de la nueva carpeta de las imágenes"
@@ -60,10 +77,15 @@ btn_filter = tk.Button(
     text="Filtrar",
     command=main
 )
+btn_clear = tk.Button(
+    master=window,
+    text="Limpiar",
+    command=clear
+)
 
 label_result = tk.Label(master=window, text="Esperando...")
 
-width_entry.grid(row=0, column=0, padx=15, pady=5)
+width_entry.grid(row=0, column=0, padx=15, pady=15)
 min_width.grid(row=0, column=0, sticky="e")
 label_min_width.grid(row=0, column=1, sticky="w")
 
@@ -71,7 +93,7 @@ height_entry.grid(row=1, column=0)
 min_height.grid(row=1, column=0, sticky="e")
 label_min_height.grid(row=1, column=1, sticky="w")
 
-actual_directory_entry.grid(row=2, column=0, pady=5)
+actual_directory_entry.grid(row=2, column=0, pady=15)
 actual_directory.grid(row=2, column=0, sticky="e")
 label_actual_directory.grid(row=2, column=1, sticky="w")
 
@@ -80,7 +102,8 @@ new_directory.grid(row=3, column=0, sticky="e")
 label_new_directory.grid(row=3, column=1, sticky="w")
 
 btn_filter.grid(row=4, column=2, pady=10)
+btn_clear.grid(row=4, column=3, pady=10)
 
-label_result.grid(row=5, column=2, padx=10)
+label_result.grid(row=6, column=3, padx=10, sticky="w")
 
 window.mainloop()
